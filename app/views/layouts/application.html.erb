@@ -9,8 +9,16 @@
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <%= yield %>
+    <header><% if notice || alert %>
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+      <hr>
+    <% end %></header>
+    <nav><ul>
+      <li><%= link_to('AutoSegMiniApp', root_path) %></li>
+      <%= render 'devise/registration_link' %>
+      <%= render 'devise/session_link' %>
+    </ul></nav>
+  <article><%= yield %></article>
   </body>
 </html>
