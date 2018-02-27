@@ -99,10 +99,4 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
-  config.include ControllerHelpers, :type => :controller
-  Warden.test_mode!
-
-  config.after do
-    Warden.test_reset!
-  end
 end
