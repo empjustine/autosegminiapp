@@ -1,0 +1,24 @@
+<h1>Lista de tarefas #<%= @task_relation.id %></h1>
+
+<p>
+  <dl>
+    <dt>Criador: </dt>
+    <dd><%= @task_relation.user.email %></dd>
+    <dt>Pública: </dt>
+    <dd><%= @task_relation.public? ? "Sim" : "Não" %></dd>
+  </dl>
+</p>
+
+<hr />
+
+<ul><% @task_relation.tasks.each_with_index do |task, i| %>
+  <li>
+    <% if task.closed? %><strike><% end %>
+    <%= task.description %>
+    <% if task.closed? %></strike><% end %>
+
+    <% if !task.closed? && task.task_relation.user == current_user %>
+    <span> - </span><%= link_to "Concluir #{i + 1}ª tarefa", close_task_url(task), method: :post %>
+    <% end %>
+  </li>
+<% end %></ul>

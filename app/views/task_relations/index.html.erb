@@ -1,0 +1,35 @@
+<h1>Listas de tarefas</h1>
+
+<h2>Minhas listas de tarefas</h2>
+
+<ul><% @owned.each do |task_relation| %>
+    <li><%= link_to "Lista de tarefas ##{task_relation.id} #{task_relation.public? ? "pública" : "não pública"} de \"#{task_relation.user.email}\"", task_relation_path(task_relation) %></li>
+  <% end %></ul>
+
+<% if @owned.size <= 0 %>
+  <p>Você não criou nenhuma lista de tarefa. Deseja <%= link_to('criar uma nova lista de tarefas', new_task_relation_path) %>?</p>
+<% end %>
+
+<h2>Listas de tarefas favoritas</h2>
+
+<ul><% @favourites.each do |task_relation| %>
+  <li><%= link_to "Lista de tarefas ##{task_relation.id} #{task_relation.public? ? "pública" : "não pública"} de \"#{task_relation.user.email}\"", task_relation_path(task_relation) %></li>
+<% end %></ul>
+
+<% if @favourites.size <= 0 %>
+  <p>Não existem listas de tarefas marcadas como favoritas.</p>
+<% end %>
+
+<h2>Todas as listas de tarefas</h2>
+
+<ul><% @task_relations.each do |task_relation| %>
+  <li><%= link_to "Lista de tarefas ##{task_relation.id} #{task_relation.public? ? "pública" : "não pública"} de \"#{task_relation.user.email}\"", task_relation_path(task_relation) %>
+  <% if task_relation.user != current_user %>
+  <span> - </span><%= link_to "Marcar como favorita", favourite_task_relation_path(task_relation), method: :post %>
+  <% end %>
+  </li>
+<% end %></ul>
+
+<% if @task_relations.size <= 0 %>
+  <p>Não existem listas de tarefas visíveis. Deseja <%= link_to('criar uma nova lista de tarefas', new_task_relation_path) %>?</p>
+<% end %>

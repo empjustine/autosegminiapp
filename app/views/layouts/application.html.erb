@@ -16,9 +16,14 @@
     <% end %></header>
     <nav><ul>
       <li><%= link_to('AutoSegMiniApp', root_path) %></li>
+      <br />
       <%= render 'devise/registration_link' %>
       <%= render 'devise/session_link' %>
+      <br />
+      <li><%= link_to('Listas de tarefas', task_relations_path) %></li>
+      <li><%= link_to('Criar lista de tarefas', new_task_relation_path) %></li>
     </ul></nav>
-  <article><%= yield %></article>
+    <hr>
+    <article><%= yield %></article>
   </body>
 </html>

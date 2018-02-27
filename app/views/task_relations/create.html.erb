@@ -1,0 +1,40 @@
+<h1>Conteúdo da nova lista de tarefas</h1>
+
+<%= form_with url: task_relations_path, local: true do |form| %>
+
+  <%
+    @tasks.each_with_index do |description, i|
+  %><div class="field">
+    <label><%= i + 1 %>ª Tarefa:
+      <%= form.text_field 'tasks[]', value: description %>
+    </label>
+    <%= form.submit "Remover #{i + 1}ª tarefa" %>
+  </div><%
+    end
+  %>
+
+  <% if @tasks.size <= 0 %>
+    <p>Ainda não existem tarefas nesta lista. Deseja <%= form.submit "Adicionar tarefa" %>?</p>
+  <% end %>
+
+  <hr />
+
+  <h2>Opções para lista de tarefas</h2>
+
+  <p>
+    <label>
+      Tornar lista de tarefas pública
+      <%= check_box_tag :public %>
+    </label>
+  </p>
+
+  <hr />
+
+  <h2>Ações para lista de tarefas</h2>
+
+  <p>
+    <%= form.submit "Adicionar tarefa" %><span>
+    </span><%= form.submit "Nova lista de tarefas" %><span>
+    </span><%= link_to('Descartar lista de tarefas', task_relations_path) %>
+  </p>
+<% end %>
