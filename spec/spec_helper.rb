@@ -16,8 +16,9 @@
 
 require 'capybara/rspec'
 require 'devise'
+require 'factory_bot_rails'
 
-require_relative 'helpers/controller_helpers'
+require_relative 'helpers/feature_helpers'
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
@@ -99,4 +100,7 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
+
+  config.include FactoryBot::Syntax::Methods
+  config.include FeatureHelpers, type: :feature
 end
