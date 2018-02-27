@@ -5,8 +5,10 @@ class TaskRelationsController < ApplicationController
 
   def index
     @task_relations = TaskRelation.all_visible(current_user)
-    @favourites = TaskRelation.all_favourites(current_user)
-    @owned = TaskRelation.all_owned(current_user)
+    @favourites = Favourite.where(user: current_user).includes(:task_relation).map do |relation|
+      relation.task_relation
+    end
+    @owned = TaskRelation.where(user: current_user)
   end
 
   def show

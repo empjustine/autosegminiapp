@@ -11,21 +11,10 @@ class TaskRelation < ApplicationRecord
   # TODO: "correct" way to do nesting, figure out later
   # accepts_nested_attributes_for :tasks
 
-  def self.all_owned(user)
-    where("user_id = :user_id", { user_id: user.id })
-  end
-
   def self.all_visible(user)
     left_joins(:favourites).where(
       "task_relations.user_id = :user_id OR task_relations.public = :public OR favourites.user_id = :user_id",
       { user_id: user.id, public: true },
-    )
-  end
-
-  def self.all_favourites(user)
-    left_joins(:favourites).where(
-      "favourites.user_id = :user_id",
-      { user_id: user.id },
     )
   end
 
