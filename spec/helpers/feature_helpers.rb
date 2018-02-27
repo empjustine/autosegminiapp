@@ -1,19 +1,21 @@
 module FeatureHelpers
   def sign_out
-    visit '/users/sign_out'
+    click_link 'Finalizar sessão'
+    expect(page).to_not have_content('Finalizar sessão')
   end
 
   def sign_up_with(email, password)
     visit '/users/sign_up'
 
-    fill_in 'Email', with: email
-    fill_in 'Password', with: password
-    fill_in 'Password confirmation', with: password
-    click_button 'Create an account'
+    fill_in 'E-mail', with: email
+    fill_in 'Senha', with: password
+    fill_in 'Confirmar senha', with: password
+    click_button 'Criar uma conta'
 
-    expect(page).to have_content 'You have created an account successfully.'
+    expect(page).to have_content 'Sua conta foi criada com sucesso.'
   end
 
+=begin
   def sign_in_with(email, password)
     visit '/users/sign_in'
 
@@ -23,10 +25,11 @@ module FeatureHelpers
 
     expect(page).to have_content 'Signed in successfully.'
   end
+=end
 
-  def create_task_relation(public=false)
+  def create_task_relation(opts={})
     visit '/task_relations/new'
-    if public
+    if opts[:public]
       check 'public'
     end
 
