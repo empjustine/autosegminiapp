@@ -10,7 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180224171748) do
+ActiveRecord::Schema.define(version: 20180227065605) do
+
+  create_table "favourites", force: :cascade do |t|
+    t.integer "task_relation_id"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["task_relation_id"], name: "index_favourites_on_task_relation_id"
+    t.index ["user_id"], name: "index_favourites_on_user_id"
+  end
+
+  create_table "task_relations", force: :cascade do |t|
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "public"
+    t.index ["user_id"], name: "index_task_relations_on_user_id"
+  end
+
+  create_table "tasks", force: :cascade do |t|
+    t.string "description"
+    t.integer "task_relation_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "closed"
+    t.index ["task_relation_id"], name: "index_tasks_on_task_relation_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
