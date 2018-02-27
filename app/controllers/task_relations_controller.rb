@@ -1,5 +1,4 @@
-class TaskRelationsController < ActionController::Base
-  protect_from_forgery with: :exception
+class TaskRelationsController < ApplicationController
   before_action :authenticate_user!
 
   layout "application"
