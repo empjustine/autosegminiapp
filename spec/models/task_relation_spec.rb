@@ -9,21 +9,18 @@ RSpec.describe TaskRelation, type: :model do
 
   context 'valid' do
     it 'has User and no child Task' do
-      task_relation = TaskRelation.new
-      task_relation.user = create(:user)
+      task_relation = TaskRelation.new user: create(:user)
       expect(task_relation).to be_valid
     end
 
     it 'has User and single child Task' do
-      task_relation = TaskRelation.new
-      task_relation.user = create(:user)
+      task_relation = TaskRelation.new user: create(:user)
       task_relation.tasks.build({ description: "a task" })
       expect(task_relation).to be_valid
     end
 
     it 'has User and several children Tasks' do
-      task_relation = TaskRelation.new
-      task_relation.user = create(:user)
+      task_relation = TaskRelation.new user: create(:user)
       10.times do ||
         task = create(:task, task_relation: task_relation)
         task_relation.tasks << task
@@ -36,8 +33,8 @@ RSpec.describe TaskRelation, type: :model do
     it 'is visible if User is the creator' do
       alice = create(:user)
 
-      task_relation = TaskRelation.new
-      task_relation.user = alice
+      task_relation = TaskRelation.new user: alice
+      expect(task_relation).to be_valid
       expect(task_relation.visible_to(alice)).to be_truthy
     end
 
@@ -45,9 +42,8 @@ RSpec.describe TaskRelation, type: :model do
       alice = create(:user)
       bob = create(:user)
 
-      task_relation = TaskRelation.new
-      task_relation.user = alice
-      task_relation.public = true
+      task_relation = TaskRelation.new user: alice, public: true
+      expect(task_relation).to be_valid
       expect(task_relation.visible_to(bob)).to be_truthy
     end
   end
@@ -57,9 +53,8 @@ RSpec.describe TaskRelation, type: :model do
       alice = create(:user)
       mallory = create(:user)
 
-      task_relation = TaskRelation.new
-      task_relation.user = alice
-      task_relation.public = false
+      task_relation = TaskRelation.new user: alice
+      expect(task_relation).to be_valid
       expect(task_relation.visible_to(mallory)).to be_falsey
     end
   end
